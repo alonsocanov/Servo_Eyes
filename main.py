@@ -9,7 +9,7 @@ def main():
     video_capture, w, h = image.video_capure()
     W, H = image.factor((w, h))
     face_cascade = image.cascade_clasifier(face_file)
-    img_center = W // 2, H // 2
+    img_center = (W // 2, H // 2)
 
     q_key = False
     while not q_key:
@@ -17,9 +17,13 @@ def main():
         ret, frame = video_capture.read()
         frame = image.resize(frame, (W, H))
         faces = image.detect_cascade(frame, face_cascade)
-        for x, y, w, h in faces:
-            frame = image.draw_rect(frame, (x, y, w, h))
+        if len(faces) == 1:
+            x, y, w, h = faces[0]
+            frame = image.draw_rect(frame, faces[0])
             face_center = (x + w // 2, y + h // 2)
+            frame = image.draw_circle(frame, face_center, 1)
+            offset = (face_center[0] - img_center[0],
+                      face_center[1] - img_center[1])
 
         image.show_img(window_name, frame)
 

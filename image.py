@@ -115,6 +115,10 @@ class Image:
         x, y, w, h = coor
         return cv2.rectangle(img, (x, y), (x + w, y + h), color, thicknes)
 
+    def draw_circle(self, img, coor, rad, color=(0, 255, 0), thicknes=2):
+        x, y = coor
+        return cv2.circle(img, (x, y), rad, color, thicknes)
+
     def cascade_clasifier(self, path):
         return cv2.CascadeClassifier(path)
 
