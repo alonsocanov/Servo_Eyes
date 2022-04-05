@@ -1,4 +1,5 @@
 from image import Image
+from pwm_control import PWM
 
 
 def main():
@@ -10,6 +11,8 @@ def main():
     W, H = image.factor((w, h))
     face_cascade = image.cascade_clasifier(face_file)
     img_center = (W // 2, H // 2)
+    servo = PWM()
+    servo.start()
 
     q_key = False
     while not q_key:
@@ -24,6 +27,8 @@ def main():
             frame = image.draw_circle(frame, face_center, 1)
             offset = (face_center[0] - img_center[0],
                       face_center[1] - img_center[1])
+            duty_cycle = servo.pixelsToDutyCycle(offset[0], img_center[0])
+            print(duty_cycle)
 
         image.show_img(window_name, frame)
 
