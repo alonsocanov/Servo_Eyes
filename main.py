@@ -1,4 +1,3 @@
-from turtle import window_width
 from image import Image
 import cv2
 
