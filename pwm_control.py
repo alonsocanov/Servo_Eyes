@@ -25,11 +25,14 @@ class PWM:
         time.sleep(sleep)
 
     def pixelsToDutyCycle(self, offset, max):
+        difference = self.max_duty_cycle - self.min_duty_cycle
+        liberty = 100
         if offset > max:
             offset = max
         elif offset < -1 * max:
             offset = -1 * max
-        duty_cycle = offset * self.max_duty_cycle / max
+        m = difference / liberty
+        duty_cycle = offset * m + self.min_duty_cycle
         return duty_cycle
 
     def percentageToDutyCycle(self, percentage: float) -> float:
