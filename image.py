@@ -110,3 +110,13 @@ class Image:
         for x1, y1, x2, y2 in lines:
             cv2.line(img, (x1, y1), (x2, y2), (0, 255, 0),
                      thickness=line_thickness)
+
+    def draw_rect(self, img, coor, color=(255, 0, 0), thicknes=2):
+        x, y, w, h = coor
+        return cv2.rectangle(img, (x, y), (x + w, y + h), color, thicknes)
+
+    def cascade_clasifier(self, path):
+        return cv2.CascadeClassifier(path)
+
+    def detect_cascade(self, img, cascade):
+        return cascade.detectMultiScale(img)
