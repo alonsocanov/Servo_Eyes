@@ -120,3 +120,12 @@ class Image:
 
     def detect_cascade(self, img, cascade):
         return cascade.detectMultiScale(img)
+
+    def show_img(self, win_name, img):
+        cv2.imshow(win_name, img)
+
+    def destroy_windows(self):
+        cv2.destroyAllWindows()
+
+    def release_feed(self, feed):
+        feed.release()
