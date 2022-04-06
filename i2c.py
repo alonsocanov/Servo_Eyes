@@ -80,11 +80,18 @@ class I2C:
     def set_imu(self):
         self.__mpu = adafruit_mpu6050.MPU6050(self.__i2c)
 
-    def set_pca9685(self, ferquency=60):
+    def set_pca9685(self, ferquency=60, min_duty_cycle=1000, max_duty_cycle=10000):
         self.__pca = PCA9685(self.__i2c)
         self.__pca.frequency = ferquency
+        self.__min_duty_cycle = min_duty_cycle
+        self.__max_duty_cycle = max_duty_cycle
 
     def set_pca_channel(self, chanel, duty_cycle):
+        if duty_cycle > self.__max_duty_cycle:
+            duty_cycle = self.__max_duty_cycle
+        elif duty_cycle < self.__min_duty_cycle:
+            duty_cycle = self.__min_duty_cycle
+
         self.__pca.channels[chanel].duty_cycle = duty_cycle
 
     def get_accleration(self):
