@@ -3,8 +3,12 @@ from pwm_control import PWM
 
 
 def main():
+    flip = 0
+    dispW = 640
+    dispH = 480
     face_file = 'haarcascade/frontalface_default.xml'
-    image = Image(0)
+    camSet='nvarguscamerasrc !  video/x-raw(memory:NVMM), width=3264, height=2464, format=NV12, framerate=21/1 ! nvvidconv flip-method='+str(flip)+' ! video/x-raw, width='+str(dispW)+', height='+str(dispH)+', format=BGRx ! videoconvert ! video/x-raw, format=BGR ! appsink'
+    image = Image(camSet)
     window_name = 'Frame'
     image.set_window(window_name)
     video_capture, w, h = image.video_capure()
@@ -27,8 +31,9 @@ def main():
             frame = image.draw_circle(frame, face_center, 1)
             offset = (face_center[0] - img_center[0],
                       face_center[1] - img_center[1])
-            duty_cycle = servo.pixelsToDutyCycle(offset[0], img_center[0])
-            print(duty_cycle)
+            duty_cycle_x = servo.pixelsToDutyCycle(offset[0], img_center[0])
+            duty_cycle_y = servo.pixelsToDutyCycle(offset[1], img_center[1])
+
 
         image.show_img(window_name, frame)
 

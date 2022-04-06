@@ -8,12 +8,12 @@ class Image:
     def __init__(self, file_path: None) -> None:
         # check available files in path
         if isinstance(file_path, str):
-            full_path = glob.glob(file_path, recursive=True)
-            if full_path:
-                self.__path = full_path[0]
-            else:
-                print('No file with that path')
-                sys.exit(1)
+            # full_path = glob.glob(file_path, recursive=True)
+            # if full_path:
+            self.__path = file_path
+            # else:
+                # print('No file with that path')
+                # sys.exit(1)
         elif isinstance(file_path, int):
             self.__path = file_path
         else:
