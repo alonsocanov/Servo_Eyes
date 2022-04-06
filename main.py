@@ -1,5 +1,6 @@
 from image import Image
 from pwm_control import PWM
+from i2c import I2C
 
 
 def main():
@@ -15,8 +16,14 @@ def main():
     W, H = image.factor((w, h))
     face_cascade = image.cascade_clasifier(face_file)
     img_center = (W // 2, H // 2)
-    servo = PWM()
-    servo.start()
+    pca = I2C()
+    pca.set_pca9685()
+    #1000 10000
+    for c in range(0, 8):
+        for i in range(100, 5000, 1):
+            print(i)
+            pca.set_pca_channel(c,i)
+
 
     q_key = False
     while not q_key:
@@ -31,8 +38,8 @@ def main():
             frame = image.draw_circle(frame, face_center, 1)
             offset = (face_center[0] - img_center[0],
                       face_center[1] - img_center[1])
-            duty_cycle_x = servo.pixelsToDutyCycle(offset[0], img_center[0])
-            duty_cycle_y = servo.pixelsToDutyCycle(offset[1], img_center[1])
+            # duty_cycle_x = servo.pixelsToDutyCycle(offset[0], img_center[0])
+            # duty_cycle_y = servo.pixelsToDutyCycle(offset[1], img_center[1])
 
 
         image.show_img(window_name, frame)

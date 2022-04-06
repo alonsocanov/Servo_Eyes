@@ -7,6 +7,8 @@ import subprocess
 import adafruit_ssd1306
 # Import the mpu6050 module
 import adafruit_mpu6050
+# Import the pca9685 module
+from adafruit_pca9685 import PCA9685
 
 class I2C:
     def __init__(self):
@@ -77,6 +79,13 @@ class I2C:
 
     def set_imu(self):
         self.__mpu = adafruit_mpu6050.MPU6050(self.__i2c)
+
+    def set_pca9685(self, ferquency=60):
+        self.__pca = PCA9685(self.__i2c)
+        self.__pca.frequency = ferquency
+
+    def set_pca_channel(self, chanel, duty_cycle):
+        self.__pca.channels[chanel].duty_cycle = duty_cycle
 
     def get_accleration(self):
         return self.__mpu.acceleration
